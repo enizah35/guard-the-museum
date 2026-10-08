@@ -1,0 +1,36 @@
+{
+	"name": "GuardTheMuseum-Lobby",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Shared": {
+				"$path": "src/shared"
+			},
+			"Packages": {
+				"$path": {
+					"optional": "Packages"
+				}
+			}
+		},
+		"ServerScriptService": {
+			"Common": {
+				"$path": "src/server/common"
+			},
+			"Lobby": {
+				"$path": "src/lobby/server"
+			}
+		},
+		"ServerStorage": {
+			"Vendor": {
+				"$path": "src/vendor"
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"Lobby": {
+					"$path": "src/lobby/client"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,11 @@
+# Versions fixées des outils (Rokit : https://github.com/rojo-rbx/rokit).
+# Installation : `rokit install` à la racine du dépôt.
+# Mettre à jour une version = une PR dédiée (la CI doit rester verte).
+
+[tools]
+rojo = "rojo-rbx/rojo@7.7.1"
+wally = "UpliftGames/wally@0.3.2"
+selene = "Kampfkarren/selene@0.31.0"
+stylua = "JohnnyMorganz/StyLua@2.5.2"
+lune = "lune-org/lune@0.10.5"
+luau-lsp = "JohnnyMorganz/luau-lsp@1.70.1"

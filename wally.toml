@@ -1,0 +1,15 @@
+# Paquets Wally. `wally install` crée Packages/ (ignoré par git).
+# Rien dans le code n'en dépend encore : la CI ne lance PAS `wally install`
+# tant que l'UI React-lua (phase 2) n'existe pas. Les projets Rojo montent
+# Packages/ en chemin optionnel, donc tout fonctionne sans.
+
+[package]
+name = "enizah35/guard-the-museum"
+version = "0.1.0"
+registry = "https://github.com/UpliftGames/wally-index"
+realm = "shared"
+private = true
+
+[dependencies]
+React = "jsdotlua/react@17.2.1"
+ReactRoblox = "jsdotlua/react-roblox@17.2.1"

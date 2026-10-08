@@ -1,0 +1,30 @@
+# Paquets Wally
+Packages/
+ServerPackages/
+DevPackages/
+wally.lock
+
+# Sorties Rojo / luau-lsp
+*.rbxl
+*.rbxlx
+*.rbxl.lock
+*.rbxlx.lock
+sourcemap.json
+sourcemap.*.json
+globalTypes.d.luau
+
+# Exports de cartes : suivis via git LFS (voir maps/), pas d'autres binaires
+*.rbxm.lock
+
+# Éditeurs / OS
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets : jamais dans le dépôt
+.env
+.env.*
+*.key
