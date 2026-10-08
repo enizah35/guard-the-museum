@@ -87,40 +87,41 @@ function CameraTablet.new(hud: Hud.Hud): CameraTablet
 		Name = "OpenCameras",
 		AnchorPoint = Vector2.new(0, 0.5),
 		Position = UDim2.new(0, 12, 0.45, 0), -- à gauche, hors des zones tactiles de Roblox
-		Size = UDim2.new(0, 160, 0, 44),
+		Size = UDim2.fromOffset(160, 44),
 	}, hud.gui)
 
 	local bar = Hud.make("Frame", {
 		Name = "CameraBar",
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = UDim2.new(0.5, 0, 1, -12),
-		Size = UDim2.new(0, 520, 0, 50),
+		Size = UDim2.fromOffset(520, 50),
 		BackgroundTransparency = 1,
 		Visible = false,
 	}, hud.gui) :: Frame
 	local prevButton = Hud.button("◀ [Q]", { Size = UDim2.new(0, 90, 1, 0) }, bar)
 	local title = Hud.label({
-		Position = UDim2.new(0, 100, 0, 0),
+		Position = UDim2.fromOffset(100, 0),
 		Size = UDim2.new(0, 220, 1, 0),
 		Text = "",
 		TextStrokeTransparency = 0.3,
 	}, bar)
-	local nextButton = Hud.button("[E] ▶", { Position = UDim2.new(0, 330, 0, 0), Size = UDim2.new(0, 90, 1, 0) }, bar)
+	local nextButton =
+		Hud.button("[E] ▶", { Position = UDim2.fromOffset(330, 0), Size = UDim2.new(0, 90, 1, 0) }, bar)
 	local exitButton =
-		Hud.button("Quitter [C]", { Position = UDim2.new(0, 430, 0, 0), Size = UDim2.new(0, 90, 1, 0) }, bar)
+		Hud.button("Quitter [C]", { Position = UDim2.fromOffset(430, 0), Size = UDim2.new(0, 90, 1, 0) }, bar)
 
 	-- Filtre « vidéosurveillance » : léger voile et pastille REC.
 	local overlay = Hud.make("Frame", {
 		Name = "CameraOverlay",
-		Size = UDim2.new(1, 0, 1, 0),
+		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.fromRGB(20, 40, 30),
 		BackgroundTransparency = 0.85,
 		Visible = false,
 		ZIndex = 0,
 	}, hud.gui) :: Frame
 	Hud.label({
-		Position = UDim2.new(0, 16, 0, 16),
-		Size = UDim2.new(0, 120, 0, 28),
+		Position = UDim2.fromOffset(16, 16),
+		Size = UDim2.fromOffset(120, 28),
 		Text = "● REC",
 		TextColor3 = Color3.fromRGB(230, 50, 50),
 		TextXAlignment = Enum.TextXAlignment.Left,

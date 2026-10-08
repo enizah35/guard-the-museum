@@ -85,33 +85,33 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 		Name = "Top",
 		AnchorPoint = Vector2.new(0.5, 0),
 		Position = UDim2.new(0.5, 0, 0, 8),
-		Size = UDim2.new(0, 260, 0, 74),
+		Size = UDim2.fromOffset(260, 74),
 		BackgroundColor3 = COLOR_PANEL,
 		BackgroundTransparency = 0.35,
 	}, gui)
 	Hud.make("UICorner", { CornerRadius = UDim.new(0, 10) }, top)
 	local clock = Hud.label({
 		Name = "Clock",
-		Position = UDim2.new(0, 0, 0, 4),
+		Position = UDim2.fromOffset(0, 4),
 		Size = UDim2.new(1, 0, 0, 36),
 		Text = "00:00",
 	}, top)
 	local barBack = Hud.make("Frame", {
 		Name = "ThreatBar",
-		Position = UDim2.new(0, 12, 0, 46),
+		Position = UDim2.fromOffset(12, 46),
 		Size = UDim2.new(1, -24, 0, 18),
 		BackgroundColor3 = Color3.fromRGB(40, 40, 50),
 	}, top)
 	Hud.make("UICorner", { CornerRadius = UDim.new(0, 6) }, barBack)
 	local barFill = Hud.make("Frame", {
 		Name = "Fill",
-		Size = UDim2.new(0, 0, 1, 0),
+		Size = UDim2.fromScale(0, 1),
 		BackgroundColor3 = COLOR_OK,
 	}, barBack) :: Frame
 	Hud.make("UICorner", { CornerRadius = UDim.new(0, 6) }, barFill)
 	local threatText = Hud.label({
 		Name = "ThreatText",
-		Size = UDim2.new(1, 0, 1, 0),
+		Size = UDim2.fromScale(1, 1),
 		Text = "Menace 0",
 		ZIndex = 2,
 		TextStrokeTransparency = 0.5,
@@ -122,7 +122,7 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 		Name = "Score",
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, -12, 0, 8),
-		Size = UDim2.new(0, 220, 0, 30),
+		Size = UDim2.fromOffset(220, 30),
 		TextXAlignment = Enum.TextXAlignment.Right,
 		Text = "Score 0",
 		TextStrokeTransparency = 0.5,
@@ -143,7 +143,7 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 		Name = "Help",
 		AnchorPoint = Vector2.new(0, 1),
 		Position = UDim2.new(0, 10, 1, -10),
-		Size = UDim2.new(0, 420, 0, 40),
+		Size = UDim2.fromOffset(420, 40),
 		TextXAlignment = Enum.TextXAlignment.Left,
 		TextWrapped = true,
 		Font = Enum.Font.Gotham,
@@ -154,7 +154,7 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 	-- Écran de fin.
 	local endScreen = Hud.make("Frame", {
 		Name = "EndScreen",
-		Size = UDim2.new(1, 0, 1, 0),
+		Size = UDim2.fromScale(1, 1),
 		BackgroundColor3 = Color3.new(0, 0, 0),
 		BackgroundTransparency = 0.35,
 		Visible = false,
@@ -163,14 +163,14 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 	local endTitle = Hud.label({
 		Name = "Title",
 		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.new(0.5, 0, 0.35, 0),
+		Position = UDim2.fromScale(0.5, 0.35),
 		Size = UDim2.new(0.8, 0, 0, 70),
 		ZIndex = 11,
 	}, endScreen)
 	local endStats = Hud.label({
 		Name = "Stats",
 		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.new(0.5, 0, 0.5, 0),
+		Position = UDim2.fromScale(0.5, 0.5),
 		Size = UDim2.new(0.8, 0, 0, 40),
 		Font = Enum.Font.Gotham,
 		ZIndex = 11,
@@ -178,7 +178,7 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 	local endCountdown = Hud.label({
 		Name = "Countdown",
 		AnchorPoint = Vector2.new(0.5, 0.5),
-		Position = UDim2.new(0.5, 0, 0.62, 0),
+		Position = UDim2.fromScale(0.5, 0.62),
 		Size = UDim2.new(0.6, 0, 0, 28),
 		Font = Enum.Font.Gotham,
 		TextTransparency = 0.2,
@@ -220,7 +220,7 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 		local ratio = math.clamp(threat / threatMax, 0, 1)
 
 		clock.Text = if phase == "Briefing" then "00:00" else NightClock.format(numberAttr("NightElapsed"), ProtoConfig)
-		barFill.Size = UDim2.new(ratio, 0, 1, 0)
+		barFill.Size = UDim2.fromScale(ratio, 1)
 		barFill.BackgroundColor3 = COLOR_OK:Lerp(COLOR_BAD, ratio)
 		threatText.Text = `Menace {math.floor(threat)}`
 		score.Text = `Score {numberAttr("Score")}  ✓{numberAttr("CorrectReports")}  ✗{numberAttr("WrongReports")}`

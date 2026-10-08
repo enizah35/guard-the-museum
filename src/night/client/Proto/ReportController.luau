@@ -85,19 +85,19 @@ function ReportController.new(hud: Hud.Hud, tablet: CameraTablet.CameraTablet)
 		Name = "ReportMenu",
 		AnchorPoint = Vector2.new(0.5, 1),
 		Position = UDim2.new(0.5, 0, 1, -72),
-		Size = UDim2.new(0, 420, 0, 96),
+		Size = UDim2.fromOffset(420, 96),
 		BackgroundColor3 = Color3.fromRGB(15, 15, 25),
 		BackgroundTransparency = 0.25,
 		Visible = false,
 	}, hud.gui) :: Frame
 	Hud.make("UICorner", { CornerRadius = UDim.new(0, 10) }, menu)
 	local menuTitle = Hud.label({
-		Position = UDim2.new(0, 8, 0, 4),
+		Position = UDim2.fromOffset(8, 4),
 		Size = UDim2.new(1, -16, 0, 30),
 		Text = "",
 	}, menu)
 	local buttonRow = Hud.make("Frame", {
-		Position = UDim2.new(0, 8, 0, 40),
+		Position = UDim2.fromOffset(8, 40),
 		Size = UDim2.new(1, -16, 0, 48),
 		BackgroundTransparency = 1,
 	}, menu)
