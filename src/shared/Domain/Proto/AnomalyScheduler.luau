@@ -106,7 +106,8 @@ function AnomalyScheduler.update(
 	end
 
 	local object = Rng.pick(rng, candidates)
-	local ruleId = Rng.pick(rng, cfg.rules) :: ProtoConfig.ProtoRuleId
+	-- Indexation directe : Rng.pick (générique) élargit les types singletons en string.
+	local ruleId: ProtoConfig.ProtoRuleId = cfg.rules[Rng.nextInt(rng, 1, #cfg.rules)]
 	local anomaly: Anomaly = {
 		key = AnomalyScheduler.makeKey(ruleId, object.objectId, object.roomId),
 		ruleId = ruleId,
