@@ -1,0 +1,36 @@
+{
+	"name": "GuardTheMuseum-Night",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Shared": {
+				"$path": "src/shared"
+			},
+			"Packages": {
+				"$path": {
+					"optional": "Packages"
+				}
+			}
+		},
+		"ServerScriptService": {
+			"Common": {
+				"$path": "src/server/common"
+			},
+			"Night": {
+				"$path": "src/night/server"
+			}
+		},
+		"ServerStorage": {
+			"Vendor": {
+				"$path": "src/vendor"
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"Night": {
+					"$path": "src/night/client"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Format, lint, types, build, tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      # Installe les versions fixées dans rokit.toml (rojo, wally, selene, stylua, lune, luau-lsp).
+      # Le jeton utilisé est le GITHUB_TOKEN automatique (limite de débit de l'API) : aucun secret à configurer.
+      - name: Installer les outils (Rokit)
+        uses: CompeyDev/setup-rokit@v0.2.1
+
+      - name: Versions des outils
+        run: |
+          rojo --version
+          selene --version
+          stylua --version
+          lune --version
+          luau-lsp --version
+
+      - name: Format (StyLua)
+        run: stylua --check src tests tools
+
+      - name: "--!strict partout"
+        run: lune run tools/check-strict
+
+      - name: Lint (selene)
+        run: selene src tests tools
+
+      - name: Build Rojo des 2 places
+        run: |
+          rojo build lobby.project.json --output lobby.rbxl
+          rojo build night.project.json --output night.rbxl
+
+      # Analyse de types stricte du code Roblox (src/), place par place, avec le sourcemap Rojo
+      # et les définitions de l'API Roblox publiées par luau-lsp.
+      # tests/ et tools/ ne sont pas analysés ici : ils dépendent des définitions Lune (@lune/*).
+      - name: Types (luau-lsp analyze)
+        run: |
+          curl -fsSL -o globalTypes.d.luau \
+            https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau
+          status=0
+          for place in lobby night; do
+            echo "::group::luau-lsp analyze ($place)"
+            rojo sourcemap "$place.project.json" --output "sourcemap.$place.json"
+            luau-lsp analyze \
+              --platform=roblox \
+              --definitions:@roblox=globalTypes.d.luau \
+              --sourcemap="sourcemap.$place.json" \
+              --base-luaurc=.luaurc \
+              --ignore="src/vendor/**" \
+              src/shared src/server "src/$place" || status=1
+            echo "::endgroup::"
+          done
+          exit $status
+
+      - name: Tests (Lune)
+        run: lune run tools/test

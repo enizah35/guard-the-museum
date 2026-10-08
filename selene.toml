@@ -1,0 +1,9 @@
+# selene : std Roblox (les globales Lune ne sont pas utilisées : Lune passe par require("@lune/...")).
+std = "roblox"
+# Modules tiers copiés tels quels (voir src/vendor/README.md).
+exclude = ["src/vendor/**"]
+
+[lints]
+# Les specs et mocks utilisent volontairement des valeurs inutilisées dans certains cas.
+unused_variable = "warn"
+shadowing = "allow"

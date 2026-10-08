@@ -1,0 +1,87 @@
+--!strict
+local TestKit = require("@tools/lib/TestKit")
+local MockClock = require("@tools/mocks/MockClock")
+local MockDataStore = require("@tools/mocks/MockDataStore")
+local MockPlayers = require("@tools/mocks/MockPlayers")
+
+local describe, it, expect = TestKit.describe, TestKit.it, TestKit.expect
+
+describe("mocks/MockDataStore", function()
+	it("enregistre, met à jour et supprime des valeurs copiées", function()
+		local store = MockDataStore.newService():GetDataStore("Profiles")
+		local profile = { xp = 10, codex = { ["Moved:Vase:Hall"] = true } }
+		store:SetAsync("Player_1", profile)
+		profile.xp = 999 -- ne doit pas toucher le store
+		expect(store:GetAsync("Player_1")).toEqual({ xp = 10, codex = { ["Moved:Vase:Hall"] = true } })
+
+		local updated = store:UpdateAsync("Player_1", function(old)
+			old.xp += 5
+			return old
+		end)
+		expect(updated.xp).toBe(15)
+		expect(store:RemoveAsync("Player_1").xp).toBe(15)
+		expect(store:GetAsync("Player_1")).toBeNil()
+	end)
+
+	it("renvoie le même store pour le même nom et simule des échecs", function()
+		local service = MockDataStore.newService()
+		local store = service:GetDataStore("Profiles")
+		expect(service:GetDataStore("Profiles")).toBe(store)
+		store:failNext(1, "throttled")
+		expect(function()
+			store:GetAsync("k")
+		end).toThrow("throttled")
+		expect(store:IncrementAsync("k", 2)).toBe(2)
+		expect(function()
+			store:SetAsync("k", { fn = function() end })
+		end).toThrow("non sérialisable")
+	end)
+end)
+
+describe("mocks/MockClock", function()
+	it("déclenche les minuteurs dans l'ordre quand le temps avance", function()
+		local clock = MockClock.new(100)
+		local log: { string } = {}
+		clock.delay(5, function()
+			table.insert(log, `b@{clock.now()}`)
+		end)
+		clock.delay(2, function()
+			table.insert(log, `a@{clock.now()}`)
+		end)
+		local cancelled = clock.delay(3, function()
+			table.insert(log, "jamais")
+		end)
+		clock.cancel(cancelled)
+		clock.advance(1)
+		expect(#log).toBe(0)
+		clock.advance(10)
+		expect(log).toEqual({ "a@102", "b@105" })
+		expect(clock.now()).toBe(111)
+		expect(clock.pendingCount()).toBe(0)
+	end)
+end)
+
+describe("mocks/MockPlayers", function()
+	it("émet PlayerAdded et PlayerRemoving", function()
+		local players = MockPlayers.new()
+		local events: { string } = {}
+		players.PlayerAdded:Connect(function(player)
+			table.insert(events, `+{player.UserId}`)
+		end)
+		local connection = players.PlayerRemoving:Connect(function(player)
+			table.insert(events, `-{player.UserId}`)
+		end)
+		local alice = players:addPlayer(1, "Alice")
+		players:addPlayer(2)
+		expect(#players:GetPlayers()).toBe(2)
+		expect(players:GetPlayerByUserId(2) ~= nil).toBeTruthy()
+		players:removePlayer(alice)
+		connection:Disconnect()
+		players:removePlayer(players:GetPlayerByUserId(2) :: any)
+		expect(events).toEqual({ "+1", "+2", "-1" })
+		alice:Kick("bye")
+		expect(alice.kicked).toBe("bye")
+	end)
+end)
+
+return nil
