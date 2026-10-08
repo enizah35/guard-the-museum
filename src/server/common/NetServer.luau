@@ -44,8 +44,10 @@ end
 
 local function getRemote(name: string): RemoteEvent
 	ensureFolder()
-	local remote = remotes[name]
-	assert(remote ~= nil, `NetServer: remote inconnue du contrat : {name}`)
+	local remote: RemoteEvent? = remotes[name]
+	if remote == nil then
+		error(`NetServer: remote inconnue du contrat : {name}`)
+	end
 	return remote
 end
 

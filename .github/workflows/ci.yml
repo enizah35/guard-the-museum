@@ -54,6 +54,7 @@ jobs:
         run: |
           curl -fsSL -o globalTypes.d.luau \
             https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/main/scripts/globalTypes.d.luau
+          status=0
           for place in lobby night; do
             echo "::group::luau-lsp analyze ($place)"
             rojo sourcemap "$place.project.json" --output "sourcemap.$place.json"
@@ -63,9 +64,10 @@ jobs:
               --sourcemap="sourcemap.$place.json" \
               --base-luaurc=.luaurc \
               --ignore="src/vendor/**" \
-              src/shared src/server "src/$place"
+              src/shared src/server "src/$place" || status=1
             echo "::endgroup::"
           done
+          exit $status
 
       - name: Tests (Lune)
         run: lune run tools/test

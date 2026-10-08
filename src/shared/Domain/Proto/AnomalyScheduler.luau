@@ -106,7 +106,7 @@ function AnomalyScheduler.update(
 	end
 
 	local object = Rng.pick(rng, candidates)
-	local ruleId = Rng.pick(rng, cfg.rules)
+	local ruleId = Rng.pick(rng, cfg.rules) :: ProtoConfig.ProtoRuleId
 	local anomaly: Anomaly = {
 		key = AnomalyScheduler.makeKey(ruleId, object.objectId, object.roomId),
 		ruleId = ruleId,
