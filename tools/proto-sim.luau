@@ -21,7 +21,9 @@ local function simulate(reactionDelay: number, wrongPerNight: number): (number, 
 	for seed = 1, NIGHTS do
 		local state = NightLoop.new(ProtoConfig, seed)
 		NightLoop.step(state, ProtoConfig.briefingSeconds, OBJECTS, 1)
-		local wrongEvery = if wrongPerNight > 0 then ProtoConfig.nightDurationSeconds / (wrongPerNight + 1) else math.huge
+		local wrongEvery = if wrongPerNight > 0
+			then ProtoConfig.nightDurationSeconds / (wrongPerNight + 1)
+			else math.huge
 		local nextWrong = wrongEvery
 		local nightPeak = 0
 		while state.phase == "Running" do
@@ -56,16 +58,6 @@ for _, delay in { 10, 20, 30, 45, 60, 90, 1e9 } do
 	for _, wrong in { 0, 3 } do
 		local victories, survived, peak = simulate(delay, wrong)
 		local label = if delay >= 1e9 then "jamais" else `{delay} s`
-		print(
-			string.format(
-				"%17s | %9d | %6d/%d | %8.0f | %6.1f",
-				label,
-				wrong,
-				victories,
-				NIGHTS,
-				survived,
-				peak
-			)
-		)
+		print(string.format("%17s | %9d | %6d/%d | %8.0f | %6.1f", label, wrong, victories, NIGHTS, survived, peak))
 	end
 end

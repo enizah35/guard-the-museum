@@ -94,7 +94,10 @@ end
 
 function NetServer.fireClient(name: string, player: Player, payload: unknown)
 	local spec = Contract[name]
-	assert(spec ~= nil and spec.direction == "ServerToClient", `NetServer.fireClient: {name} n'est pas une remote S→C`)
+	assert(
+		spec ~= nil and spec.direction == "ServerToClient",
+		`NetServer.fireClient: {name} n'est pas une remote S→C`
+	)
 	getRemote(name):FireClient(player, payload)
 end
 

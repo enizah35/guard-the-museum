@@ -32,10 +32,7 @@ local function copyValue(value: any, depth: number): any
 	elseif kind == "table" then
 		local out = {}
 		for k, v in value do
-			assert(
-				type(k) == "string" or type(k) == "number",
-				`MockDataStore : clé non sérialisable ({type(k)})`
-			)
+			assert(type(k) == "string" or type(k) == "number", `MockDataStore : clé non sérialisable ({type(k)})`)
 			out[k] = copyValue(v, depth + 1)
 		end
 		return out

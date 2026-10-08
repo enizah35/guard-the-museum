@@ -63,6 +63,8 @@ selene src tests tools                # lint
 rojo sourcemap lobby.project.json -o sourcemap.json   # pour luau-lsp dans l'éditeur
 ```
 
+Sans Rokit (conteneur cloud qui n'atteint pas les releases GitHub) : `cargo install --locked stylua --version 2.5.2 --features luau`. Sans la feature `luau`, StyLua calcule la largeur des lignes autrement et la CI rejette le formatage.
+
 La CI (`.github/workflows/ci.yml`) lance, sur chaque PR et chaque push sur `main` :
 StyLua `--check`, `check-strict`, selene, `rojo build` des 2 places, `luau-lsp analyze`
 (strict, définitions Roblox, sur `src/`) et les tests Lune. Elle n'utilise aucun secret.

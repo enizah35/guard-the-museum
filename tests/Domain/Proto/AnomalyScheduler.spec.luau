@@ -17,7 +17,10 @@ cfg.maxActiveAnomalies = 4
 local function objects(count: number): { ObjectRef }
 	local list: { ObjectRef } = {}
 	for i = 1, count do
-		table.insert(list, { objectId = `Obj{i}`, roomId = if i % 2 == 0 then "Hall" else "Galerie", category = "Vase" })
+		table.insert(
+			list,
+			{ objectId = `Obj{i}`, roomId = if i % 2 == 0 then "Hall" else "Galerie", category = "Vase" }
+		)
 	end
 	return list
 end

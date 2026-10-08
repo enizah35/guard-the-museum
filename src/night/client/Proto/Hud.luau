@@ -242,7 +242,9 @@ function Hud.new(playerGui: Instance, nightState: Instance): Hud
 		endScreen.Visible = phase == "Ended"
 		if phase == "Ended" then
 			local victory = stringAttr("Outcome") == "Victory"
-			endTitle.Text = if victory then "VICTOIRE : vous avez tenu jusqu'à 6 h" else "DÉFAITE : la menace a atteint 100"
+			endTitle.Text = if victory
+				then "VICTOIRE : vous avez tenu jusqu'à 6 h"
+				else "DÉFAITE : la menace a atteint 100"
 			endTitle.TextColor3 = if victory then COLOR_OK else COLOR_BAD
 			local correct = numberAttr("CorrectReports")
 			local wrong = numberAttr("WrongReports")

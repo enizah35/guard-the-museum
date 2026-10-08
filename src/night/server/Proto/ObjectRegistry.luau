@@ -179,9 +179,7 @@ function ObjectRegistry.applyMoved(objectId: string, move: MoveParams)
 		return
 	end
 	local reference = entry.referencePivot
-	local moved = CFrame.new(move.offsetX, 0, move.offsetZ)
-		* reference
-		* CFrame.Angles(0, math.rad(move.yawDegrees), 0)
+	local moved = CFrame.new(move.offsetX, 0, move.offsetZ) * reference * CFrame.Angles(0, math.rad(move.yawDegrees), 0)
 	entry.instance:PivotTo(moved)
 end
 

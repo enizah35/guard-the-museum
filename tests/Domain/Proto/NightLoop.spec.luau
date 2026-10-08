@@ -127,7 +127,8 @@ describe("Domain/Proto/NightLoop", function()
 		expect(#active).toBe(1)
 		local anomaly = active[1]
 		local before = state.threat
-		local outcome = NightLoop.report(state, { roomId = anomaly.roomId, objectId = anomaly.objectId, ruleId = anomaly.ruleId })
+		local outcome =
+			NightLoop.report(state, { roomId = anomaly.roomId, objectId = anomaly.objectId, ruleId = anomaly.ruleId })
 		assert(outcome ~= nil, "signalement ignoré")
 		expect(outcome.verdict.ok).toBe(true)
 		expect(outcome.resolved and outcome.resolved.key).toBe(anomaly.key)

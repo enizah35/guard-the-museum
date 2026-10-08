@@ -324,7 +324,8 @@ local function buildCameras(parent: Instance)
 		local center = roomCenter(def.room)
 		local position = center + def.corner
 		local target = Vector3.new(center.X, FLOOR_TOP + 2, center.Z)
-		local cam = makePart(def.id, Vector3.new(1, 1, 1.6), CFrame.lookAt(position, target), Color3.new(0.1, 0.1, 0.1), folder)
+		local cam =
+			makePart(def.id, Vector3.new(1, 1, 1.6), CFrame.lookAt(position, target), Color3.new(0.1, 0.1, 0.1), folder)
 		cam.CanCollide = false
 		cam.CanQuery = false
 		cam.CanTouch = false
