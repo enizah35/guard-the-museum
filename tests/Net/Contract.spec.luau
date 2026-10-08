@@ -42,6 +42,31 @@ describe("Net/Contract", function()
 		expect((Contract["Night.Ping"].validate({ x = 1, y = 2, z = 3 }))).toBe(false)
 	end)
 
+	it("valide Night.ViewCamera (identifiant ou nil pour quitter)", function()
+		local validate = Contract["Night.ViewCamera"].validate
+		expect((validate("CAM-1"))).toBe(true)
+		expect((validate(nil))).toBe(true)
+		expect((validate(3))).toBe(false)
+		expect((validate(""))).toBe(false)
+	end)
+
+	it("valide Night.ReportResult avec ses champs optionnels d'équipe", function()
+		local validate = Contract["Night.ReportResult"].validate
+		expect((validate({ ok = false, threatDelta = 10 }))).toBe(true)
+		expect((validate({
+			ok = true,
+			anomalyKey = "Moved:Vase:Hall",
+			threatDelta = -5,
+			scoreDelta = 100,
+			objectId = "Vase",
+			roomId = "Hall",
+			ruleId = "Moved",
+			reporterName = "Hugo",
+		}))).toBe(true)
+		expect((validate({ ok = true, threatDelta = -5, scoreDelta = "100" }))).toBe(false)
+		expect((validate({ ok = true, threatDelta = -5, reporterName = 12 }))).toBe(false)
+	end)
+
 	it("est figé (aucune remote ajoutée à l'exécution)", function()
 		expect(function()
 			(Contract :: any)["Hack.Remote"] = {}

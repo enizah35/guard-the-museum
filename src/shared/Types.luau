@@ -40,10 +40,16 @@ export type ReportPayload = {
 }
 
 -- Contenu de `Night.ReportResult` (S→C).
+-- Les champs optionnels servent au retour d'équipe (qui a signalé quoi) du prototype P0.5.
 export type ReportResult = {
 	ok: boolean,
 	anomalyKey: AnomalyKey?,
 	threatDelta: number,
+	scoreDelta: number?,
+	objectId: ObjectId?,
+	roomId: RoomId?,
+	ruleId: RuleId?,
+	reporterName: string?,
 }
 
 return {}

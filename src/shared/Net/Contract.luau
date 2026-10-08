@@ -64,6 +64,22 @@ local function validateReportResult(payload: unknown): (boolean, string?)
 	if t.anomalyKey ~= nil and not isId(t.anomalyKey) then
 		return false, "anomalyKey invalide"
 	end
+	if t.scoreDelta ~= nil and type(t.scoreDelta) ~= "number" then
+		return false, "scoreDelta invalide"
+	end
+	for _, key in { "objectId", "roomId", "ruleId", "reporterName" } do
+		if t[key] ~= nil and not isId(t[key]) then
+			return false, `{key} invalide`
+		end
+	end
+	return true
+end
+
+-- Night.ViewCamera : identifiant de caméra, ou nil pour quitter la vue caméra.
+local function validateViewCamera(payload: unknown): (boolean, string?)
+	if payload ~= nil and not isId(payload) then
+		return false, "cameraId invalide"
+	end
 	return true
 end
 
@@ -108,6 +124,12 @@ local Contract: { [string]: RemoteSpec } = {
 		name = "Night.ReportResult",
 		direction = "ServerToClient",
 		validate = validateReportResult,
+	},
+	["Night.ViewCamera"] = {
+		name = "Night.ViewCamera",
+		direction = "ClientToServer",
+		rateLimitPerSecond = 5,
+		validate = validateViewCamera,
 	},
 	["Night.Ping"] = {
 		name = "Night.Ping",

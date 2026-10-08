@@ -29,4 +29,6 @@ Conventions et règles : voir [CLAUDE.md](CLAUDE.md).
 Vérifications faites par la CI : `stylua --check src tests tools`, `lune run tools/check-strict`,
 `selene src tests tools`, `rojo build` des 2 places, `luau-lsp analyze` et `lune run tools/test`.
 
+Prototype jetable de la boucle (P0.5) : voir [docs/test-prototype.md](docs/test-prototype.md).
+
 Optionnel (UI, phase 2) : `wally install` pour récupérer React-lua dans `Packages/`.
